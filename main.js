@@ -6,7 +6,7 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const camera = new THREE.PerspectiveCamera(750, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
@@ -14,7 +14,9 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize( window.innerWidth, window.innerHeight);
-camera.position.setZ(10);
+camera.position.setY(60);
+camera.position.setZ(1);
+camera.position.setX(0);
 
 renderer.render( scene, camera);
 
@@ -24,7 +26,7 @@ const material = new THREE.MeshStandardMaterial( { color: 0xFF6347 });
 const torus = new THREE.Mesh(geometry, material);
 
 const pointLight = new THREE.PointLight(0xffffff);
-pointLight.position.set(15,5,1)
+pointLight.position.set(105,5,1)
 
 const ambientLight = new THREE.AmbientLight(0xFD9386)
 
@@ -40,7 +42,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 function addStar() {
     const geometry = new THREE.SphereGeometry( 0.25, 32, 16 ); 
-    const material = new THREE.MeshStandardMaterial ({ color: 0xffffff } ); 
+    const material = new THREE.MeshStandardMaterial ({ color: 0xf3e0a1 } ); 
     const star = new THREE.Mesh( geometry, material ); 
 
     const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100))
@@ -67,14 +69,7 @@ function animate() {
 
 animate()
 
-//avatar 
-const jeffTexture = new THREE. TextureLoader () . load('../images/miles.png ');
-const jeff = new THREE.Mesh(
-new THREE.BoxGeometry(3, 3, 3) ,
-new THREE.MeshBasicMaterial( { map: jeffTexture })
-);
 
-scene.add(jeff)
 
 
 // Moon
@@ -92,17 +87,10 @@ scene.add(moon)
 // Scroll Animation
 
 function moveCamera() {
-  const t = document.body.getBoundingClientRect().top;
-  moon.rotation.x += 0.05;
-  moon.rotation.y += 0.075;
-  moon.rotation.z += 0.05;
-
-  jeff.rotation.y += 0.01;
-  jeff.rotation.z += 0.01;
-
-  camera.position.z = t * -0.01;
-  camera.position.x = t * -0.0002;
-  camera.rotation.y = t * -0.0002;
+  moon.rotation.x += 0.03;
+  moon.rotation.y += 0.03;
+  moon.rotation.z += 0.03;
+  
 }
 document.body.onscroll = moveCamera;
 moveCamera();
